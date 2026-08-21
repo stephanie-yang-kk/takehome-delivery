@@ -3,14 +3,26 @@ import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
+import { isLoggedIn } from './auth/session'
 import { parseRoute } from './routes'
+import './App.css'
 
 function App() {
   const route = parseRoute(window.location.pathname)
 
   useEffect(() => {
     if (route.page === 'unknown') {
-      window.history.replaceState(null, '', '/login')
+      window.location.replace('/login')
+      return
+    }
+
+    if (!isLoggedIn() && route.page !== 'login') {
+      window.location.replace('/login')
+      return
+    }
+
+    if (isLoggedIn() && route.page === 'login') {
+      window.location.replace('/dashboard')
     }
   }, [route.page])
 

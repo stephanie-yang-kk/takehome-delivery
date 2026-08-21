@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "test": "node --test src/routes.test.mjs",
+    "test": "node --test src/routes.test.mjs src/api-errors.test.mjs",
     "build": "tsc -b && vite build",
     "preview": "vite preview"
   },

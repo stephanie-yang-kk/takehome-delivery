@@ -1,25 +1,30 @@
 import type { ReactNode } from 'react'
+import { clearSession, getRole } from '../auth/session'
 
 interface LayoutProps {
   children: ReactNode
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const role = getRole()
+
+  function handleLogout() {
+    clearSession()
+    window.location.href = '/login'
+  }
+
   return (
     <div>
-      <header style={{
-        padding: '0.75rem 1.5rem',
-        borderBottom: '1px solid #e0e0e0',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}>
-        <a href="/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <h1 style={{ fontSize: '1.25rem', fontWeight: 600 }}>Service Monitor</h1>
+      <header className="app-header">
+        <a href="/dashboard" className="brand-link">
+          <h1>Service Monitor</h1>
         </a>
-        {/* TODO */}
+        <div className="header-actions">
+          {role ? <span className="role-pill">{role}</span> : null}
+          <button type="button" onClick={handleLogout}>Log out</button>
+        </div>
       </header>
-      <main style={{ padding: '1.5rem' }}>
+      <main className="app-main">
         {children}
       </main>
     </div>
