@@ -28,11 +28,20 @@
 - Cross-layer consistency across API responses, UI states, logs, and tests.
 - One technical decision record: constraints, considered alternatives,
   decision, downside, and reversal trigger.
+  - database selection:
+    - initially thought redis is the best solution for such stale issue, as redis has default expiry policy
+    - but it's not allowed to use external services
+    - use sqllite + local cache as alternative
+    - will have problem with multiple pods
 - Two places where running something changed your mind, including the specific
   observation that changed it and what you did about it.
 - Known defects and risks.
+  - token expiry policy
+  - data inconsistency in multiple pods
+  - frontend not showing latest data as it relies on manual refresh, instead of  call backend regularly or using websocket
 - The one thing in your own implementation you expect to fail first in
   production, why, and how you would find out.
+  - data inconsistency in multiple pods? should be visible from frontend
 - AI tools and models used, or an explicit statement that none were used.
   - gpt-5.6
 - If you used AI, two concrete examples of output you accepted, corrected, or rejected in any combination, with a short reason per example.
