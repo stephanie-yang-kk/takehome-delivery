@@ -43,6 +43,7 @@ async def get_service_metrics(
     service_id: str,
     request: Request,
     window: str | None = Query(None),
+    user: User = Depends(get_current_user),
 ) -> MetricsResponse:
     target = monitoring_service.get_target(service_id)
     window_seconds = parse_window(window)
